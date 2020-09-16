@@ -212,3 +212,74 @@ Feature: Basic Arithmetic
       | 1 | 2 | 3  |
       | 3 | 7 | 10 |
 ```
+
+To play the cucumber tests, run the command :
+```
+./gradlew clean check
+```
+
+
+the output should look like this :
+
+```
+Gradle Test Executor 6 STANDARD_ERROR
+    sept. 17, 2020 12:56:04 AM org.junit.platform.launcher.core.LauncherConfigurationParameters fromClasspathResource
+    INFO: Loading JUnit Platform configuration parameters from classpath resource [file:/home/cheroliv/src/developer-project/gateway-agence/build/resources/test/junit-platform.properties].
+
+com.cheroliv.calculator.CucumberTest > Addition STANDARD_OUT
+
+    Scenario: Addition                    # com/cheroliv/calculator/calculator.feature:6
+      Given a calculator I just turned on # void com.cheroliv.calculator.CalculatorSteps.setup()
+      When I add 4 and 5                  # void com.cheroliv.calculator.CalculatorSteps.add(int,int)
+      Then the result is 9                # void com.cheroliv.calculator.CalculatorSteps.the_result_is(double)
+
+com.cheroliv.calculator.CucumberTest > Addition PASSEDberTest
+
+com.cheroliv.calculator.CucumberTest > Substraction STANDARD_OUT
+
+    Scenario: Substraction                # com/cheroliv/calculator/calculator.feature:10
+      Given a calculator I just turned on # void com.cheroliv.calculator.CalculatorSteps.setup()
+      When I substract 7 to 2             # void com.cheroliv.calculator.CalculatorSteps.substract(int,int)
+      Then the result is 5                # void com.cheroliv.calculator.CalculatorSteps.the_result_is(double)
+
+com.cheroliv.calculator.CucumberTest > Substraction PASSED
+
+com.cheroliv.calculator.CucumberTest > Several additions #1 STANDARD_OUT
+
+    Scenario Outline: Several additions   # com/cheroliv/calculator/calculator.feature:20
+      Given a calculator I just turned on # void com.cheroliv.calculator.CalculatorSteps.setup()
+      When I add 1 and 2                  # void com.cheroliv.calculator.CalculatorSteps.add(int,int)
+      Then the result is 3                # void com.cheroliv.calculator.CalculatorSteps.the_result_is(double)
+
+com.cheroliv.calculator.CucumberTest > Several additions #1 PASSED
+
+com.cheroliv.calculator.CucumberTest > Several additions #2 STANDARD_OUT
+
+    Scenario Outline: Several additions   # com/cheroliv/calculator/calculator.feature:21
+      Given a calculator I just turned on # void com.cheroliv.calculator.CalculatorSteps.setup()
+      When I add 3 and 7                  # void com.cheroliv.calculator.CalculatorSteps.add(int,int)
+      Then the result is 10               # void com.cheroliv.calculator.CalculatorSteps.the_result_is(double)
+
+com.cheroliv.calculator.CucumberTest > Several additions #2 PASSED
+
+com.cheroliv.calculator.CucumberTest STANDARD_ERROR
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │ Share your Cucumber Report with your team at https://reports.cucumber.io    │
+    │ Activate publishing with one of the following:                              │
+    │                                                                             │
+    │ src/test/resources/cucumber.properties:    cucumber.publish.enabled=true    │
+    │ Environment variable:                      CUCUMBER_PUBLISH_ENABLED=true    │
+    │ JUnit:                                     @CucumberOptions(publish = true) │
+    │                                                                             │
+    │ More information at https://reports.cucumber.io/docs/cucumber-jvm           │
+    │                                                                             │
+    │ To disable this message, add cucumber.publish.quiet=true to                 │
+    │ src/test/resources/cucumber.properties                                      │
+    └─────────────────────────────────────────────────────────────────────────────┘
+
+com.cheroliv.agence.gateway.AppTest > testAppHasAGreeting() PASSED
+
+BUILD SUCCESSFUL in 21s
+5 actionable tasks: 5 executed
+
+````
