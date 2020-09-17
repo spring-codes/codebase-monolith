@@ -1,10 +1,10 @@
-import Build_gradle.Constants.projectArtifactGroup
 import Build_gradle.Constants.cucumberVersion
 import Build_gradle.Constants.defaultTaskName
 import Build_gradle.Constants.junitJupiterVersion
 import Build_gradle.Constants.jvmTargetVersion
 import Build_gradle.Constants.kotlinCompilerOptions
 import Build_gradle.Constants.mainClass
+import Build_gradle.Constants.projectArtifactGroup
 import Build_gradle.Constants.projectVersion
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -12,7 +12,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 object Constants {
     const val projectArtifactGroup = "com.cheroliv.saas"
-    const val projectVersion= "0.0.1"
+    const val projectVersion = "0.0.1"
     const val junitJupiterVersion = "5.7.0"
     const val cucumberVersion = "6.7.0"
     const val mainClass = "com.cheroliv.agence.gateway.GatewayAgenceAppKt"
