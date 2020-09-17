@@ -13,12 +13,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 object Constants {
     const val projectArtifactGroup = "com.cheroliv.saas"
     const val projectVersion = "0.0.1"
-    const val junitJupiterVersion = "5.7.0"
-    const val cucumberVersion = "6.7.0"
     const val mainClass = "com.cheroliv.agence.gateway.GatewayAgenceAppKt"
+    const val defaultTaskName = "bootRun"
     const val jvmTargetVersion = "1.8"
     const val kotlinCompilerOptions = "-Xjsr305=strict"
-    const val defaultTaskName = "bootRun"
+    const val junitJupiterVersion = "5.7.0"
+    const val cucumberVersion = "6.7.0"
 }
 
 buildscript {
@@ -36,6 +36,7 @@ plugins {
     kotlin("plugin.spring") version "1.4.10"
     id("io.spring.dependency-management") version "1.0.10.RELEASE"
     id("org.springframework.boot") version "2.3.3.RELEASE"
+    id ("com.google.cloud.tools.jib") version "2.5.0"
 }
 
 
