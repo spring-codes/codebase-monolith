@@ -1,5 +1,18 @@
+import Build_gradle.Constants.cucumberVersion
+import Build_gradle.Constants.junitJupiterVersion
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+
+group = "com.cheroliv.saas"
+version = "0.0.1"
+
+
+object Constants {
+    const val junitJupiterVersion = "5.7.0"
+    const val cucumberVersion = "6.7.0"
+    const val kotlinVersion = "1.4.10"
+}
 
 buildscript {
     repositories {
@@ -18,13 +31,19 @@ plugins {
     id("org.springframework.boot") version "2.3.3.RELEASE"
 }
 
+
 repositories {
     mavenCentral()
     jcenter()
 }
 
-group = "com.cheroliv.saas"
-version = "0.0.1"
+java.sourceCompatibility = JavaVersion.VERSION_14
+
+defaultTasks("bootRun")
+
+springBoot {
+    mainClassName = "com.cheroliv.agence.gateway.GatewayAgenceAppKt"
+}
 
 configurations {
     compileOnly {
@@ -33,10 +52,6 @@ configurations {
 }
 
 dependencies {
-    val junitJupiterVersion = "5.7.0"
-    val cucumberVersion = "6.7.0"
-
-
     // Align versions of all Kotlin components
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     // Use the Kotlin JDK 8 standard library.
@@ -57,30 +72,26 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     // add spring boot support
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
     implementation("org.springframework.boot:spring-boot-starter-web") {
-        exclude("org.springframework.boot","spring-boot-starter-tomcat")
+        exclude("org.springframework.boot", "spring-boot-starter-tomcat")
     }
     implementation("org.springframework.boot:spring-boot-starter-undertow")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude( "org.junit.vintage",  "junit-vintage-engine")
+        exclude("org.junit.vintage", "junit-vintage-engine")
     }
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-
-
-//    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    runtimeOnly("com.h2database:h2")
-    runtimeOnly("io.r2dbc:r2dbc-h2")
+    testRuntimeOnly("com.h2database:h2")
+    testRuntimeOnly("io.r2dbc:r2dbc-h2")
     runtimeOnly("io.r2dbc:r2dbc-postgresql")
     runtimeOnly("org.postgresql:postgresql")
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 tasks.withType<Test> {
@@ -97,11 +108,3 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "1.8"
     }
 }
-
-java.sourceCompatibility = JavaVersion.VERSION_14
-
-springBoot {
-    mainClassName = "com.cheroliv.agence.gateway.GatewayAgenceAppKt"
-}
-
-defaultTasks( "bootRun")

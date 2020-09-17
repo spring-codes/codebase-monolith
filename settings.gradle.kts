@@ -1,1 +1,1 @@
-rootProject.name = "gateway-agence"
+rootProject.name = "agence-gateway"
