@@ -1,5 +1,9 @@
 import Build_gradle.Constants.cucumberVersion
+import Build_gradle.Constants.defaultTaskName
 import Build_gradle.Constants.junitJupiterVersion
+import Build_gradle.Constants.jvmTargetVersion
+import Build_gradle.Constants.kotlinCompilerOptions
+import Build_gradle.Constants.mainClass
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -11,7 +15,10 @@ version = "0.0.1"
 object Constants {
     const val junitJupiterVersion = "5.7.0"
     const val cucumberVersion = "6.7.0"
-    const val kotlinVersion = "1.4.10"
+    const val mainClass = "com.cheroliv.agence.gateway.GatewayAgenceAppKt"
+    const val jvmTargetVersion = "1.8"
+    const val kotlinCompilerOptions = "-Xjsr305=strict"
+    const val defaultTaskName = "bootRun"
 }
 
 buildscript {
@@ -39,10 +46,10 @@ repositories {
 
 java.sourceCompatibility = JavaVersion.VERSION_14
 
-defaultTasks("bootRun")
+defaultTasks(defaultTaskName)
 
 springBoot {
-    mainClassName = "com.cheroliv.agence.gateway.GatewayAgenceAppKt"
+    mainClassName = mainClass
 }
 
 configurations {
@@ -104,7 +111,7 @@ tasks.withType<Test> {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "1.8"
+        freeCompilerArgs = listOf(kotlinCompilerOptions)
+        jvmTarget = jvmTargetVersion
     }
 }
