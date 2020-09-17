@@ -4,7 +4,18 @@ import java.util.*
 
 
 class Calculator {
+
+    companion object {
+        private val OPS = listOf("-", "+", "*", "/")
+    }
+
     private val stack: Deque<Number?> = LinkedList()
+
+
+    fun value(): Number? {
+        return stack.last
+    }
+
 
     fun push(arg: Any?) {
         when {
@@ -31,11 +42,4 @@ class Calculator {
         }
     }
 
-    fun value(): Number? {
-        return stack.last
-    }
-
-    companion object {
-        private val OPS = listOf("-", "+", "*", "/")
-    }
 }
