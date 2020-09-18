@@ -1,6 +1,5 @@
 import Build_gradle.Constants.cucumberVersion
 import Build_gradle.Constants.defaultTaskName
-import Build_gradle.Constants.dockerGradlefileConfigPath
 import Build_gradle.Constants.junitJupiterVersion
 import Build_gradle.Constants.jvmTargetVersion
 import Build_gradle.Constants.kotlinCompilerOptions
@@ -122,4 +121,11 @@ tasks.withType<KotlinCompile> {
     }
 }
 
-apply(from = dockerGradlefileConfigPath)
+jib {
+    from {
+        image = "adoptopenjdk:14-jre-hotspot"
+    }
+    to {
+        image = "cheroliv/agence-gateway"
+    }
+}
