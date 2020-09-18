@@ -14,8 +14,9 @@ object Constants {
     const val dockerHubUsernameKey = "hub_docker_com_personal_username"
     const val dockerHubPasswordKey = "hub_docker_com_personal_password"
     const val dockerHubImageRepo = "cheroliv/agence-gateway"
-    const val appDockerBaseImage = "adoptopenjdk:11-jre-hotspot"
+    const val appDockerBaseImage = "adoptopenjdk/openjdk14:jdk-14.0.2_12"
 }
+
 
 buildscript {
     repositories {
