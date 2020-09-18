@@ -1,14 +1,5 @@
-import Build_gradle.Constants.cucumberVersion
-import Build_gradle.Constants.defaultTaskName
-import Build_gradle.Constants.junitJupiterVersion
-import Build_gradle.Constants.jvmTargetVersion
-import Build_gradle.Constants.kotlinCompilerOptions
-import Build_gradle.Constants.mainClass
-import Build_gradle.Constants.projectArtifactGroup
-import Build_gradle.Constants.projectVersion
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 
 object Constants {
     const val projectArtifactGroup = "com.cheroliv.saas"
@@ -20,6 +11,10 @@ object Constants {
     const val dockerGradlefileConfigPath = "docker.gradle.kts"
     const val junitJupiterVersion = "5.7.0"
     const val cucumberVersion = "6.7.0"
+    const val dockerHubUsernameKey = "hub_docker_com_personal_username"
+    const val dockerHubPasswordKey = "hub_docker_com_personal_password"
+    const val dockerHubImageRepo = "cheroliv/agence-gateway"
+    const val appDockerBaseImage = "adoptopenjdk:11-jre-hotspot"
 }
 
 buildscript {
@@ -46,15 +41,15 @@ repositories {
     jcenter()
 }
 
-group = projectArtifactGroup
-version = projectVersion
+group = Constants.projectArtifactGroup
+version = Constants.projectVersion
 
 java.sourceCompatibility = JavaVersion.VERSION_14
 
-defaultTasks(defaultTaskName)
+defaultTasks(Constants.defaultTaskName)
 
 springBoot {
-    mainClassName = mainClass
+    mainClassName = Constants.mainClass
 }
 
 configurations {
@@ -75,11 +70,11 @@ dependencies {
         exclude("junit", "junit")
     }
     //testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
-    testImplementation("io.cucumber:cucumber-java:$cucumberVersion")
-    testImplementation("io.cucumber:cucumber-junit-platform-engine:$cucumberVersion")
-    testImplementation("io.cucumber:cucumber-junit:$cucumberVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
-    testImplementation("org.junit.vintage:junit-vintage-engine:$junitJupiterVersion")
+    testImplementation("io.cucumber:cucumber-java:${Constants.cucumberVersion}")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine:${Constants.cucumberVersion}")
+    testImplementation("io.cucumber:cucumber-junit:${Constants.cucumberVersion}")
+    testImplementation("org.junit.jupiter:junit-jupiter:${Constants.junitJupiterVersion}")
+    testImplementation("org.junit.vintage:junit-vintage-engine:${Constants.junitJupiterVersion}")
     // add coroutines support
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
@@ -114,18 +109,23 @@ tasks.withType<Test> {
     }
 }
 
+
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        freeCompilerArgs = listOf(kotlinCompilerOptions)
-        jvmTarget = jvmTargetVersion
+        freeCompilerArgs = listOf(Constants.kotlinCompilerOptions)
+        jvmTarget = Constants.jvmTargetVersion
     }
 }
 
 jib {
     from {
-        image = "adoptopenjdk:14-jre-hotspot"
+        image = Constants.appDockerBaseImage
     }
     to {
-        image = "cheroliv/agence-gateway"
+        image = Constants.dockerHubImageRepo
+        auth {
+            username = project.properties[Constants.dockerHubUsernameKey] as String?
+            password = project.properties[Constants.dockerHubPasswordKey] as String?
+        }
     }
 }
