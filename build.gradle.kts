@@ -1,3 +1,11 @@
+import Build_gradle.Constants.appDockerBaseImage
+import Build_gradle.Constants.cucumberVersion
+import Build_gradle.Constants.dockerHubImageRepo
+import Build_gradle.Constants.dockerHubPasswordKey
+import Build_gradle.Constants.dockerHubUsernameKey
+import Build_gradle.Constants.junitJupiterVersion
+import Build_gradle.Constants.jvmTargetVersion
+import Build_gradle.Constants.kotlinCompilerOptions
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -8,7 +16,7 @@ object Constants {
     const val defaultTaskName = "bootRun"
     const val jvmTargetVersion = "1.8"
     const val kotlinCompilerOptions = "-Xjsr305=strict"
-    const val dockerGradlefileConfigPath = "docker.gradle.kts"
+    const val dockerGradleFileConfigPath = "docker.gradle.kts"
     const val junitJupiterVersion = "5.7.0"
     const val cucumberVersion = "6.7.0"
     const val dockerHubUsernameKey = "hub_docker_com_personal_username"
@@ -71,11 +79,11 @@ dependencies {
         exclude("junit", "junit")
     }
     //testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
-    testImplementation("io.cucumber:cucumber-java:${Constants.cucumberVersion}")
-    testImplementation("io.cucumber:cucumber-junit-platform-engine:${Constants.cucumberVersion}")
-    testImplementation("io.cucumber:cucumber-junit:${Constants.cucumberVersion}")
-    testImplementation("org.junit.jupiter:junit-jupiter:${Constants.junitJupiterVersion}")
-    testImplementation("org.junit.vintage:junit-vintage-engine:${Constants.junitJupiterVersion}")
+    testImplementation("io.cucumber:cucumber-java:$cucumberVersion")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine:$cucumberVersion")
+    testImplementation("io.cucumber:cucumber-junit:$cucumberVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
+    testImplementation("org.junit.vintage:junit-vintage-engine:$junitJupiterVersion")
     // add coroutines support
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
@@ -113,20 +121,20 @@ tasks.withType<Test> {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        freeCompilerArgs = listOf(Constants.kotlinCompilerOptions)
-        jvmTarget = Constants.jvmTargetVersion
+        freeCompilerArgs = listOf(kotlinCompilerOptions)
+        jvmTarget = jvmTargetVersion
     }
 }
 
 jib {
     from {
-        image = Constants.appDockerBaseImage
+        image = appDockerBaseImage
     }
     to {
-        image = Constants.dockerHubImageRepo
+        image = dockerHubImageRepo
         auth {
-            username = project.properties[Constants.dockerHubUsernameKey] as String?
-            password = project.properties[Constants.dockerHubPasswordKey] as String?
+            username = project.properties[dockerHubUsernameKey] as String?
+            password = project.properties[dockerHubPasswordKey] as String?
         }
     }
 }
