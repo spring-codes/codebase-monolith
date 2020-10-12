@@ -110,6 +110,8 @@ dependencies {
     runtimeOnly("io.r2dbc:r2dbc-h2")
     //runtimeOnly("io.r2dbc:r2dbc-postgresql")
     //runtimeOnly("org.postgresql:postgresql")
+    //Logger
+    implementation("ch.qos.logback:logback-classic")
 }
 
 tasks.withType<Test> {
