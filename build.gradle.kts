@@ -8,6 +8,7 @@ import Build_gradle.Constants.junitJupiterVersion
 import Build_gradle.Constants.jvmTargetVersion
 import Build_gradle.Constants.kotlinCompilerOptions
 import Build_gradle.Constants.problemSpringWebfluxVersion
+import Build_gradle.Constants.commonsLang3Version
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -28,6 +29,7 @@ object Constants {
     const val kotlinVersion = "1.4.10"
     const val jsonwebtokenVersion = "0.11.2"
     const val problemSpringWebfluxVersion = "0.26.2"
+    const val commonsLang3Version="3.11"
 }
 
 buildscript {
@@ -98,6 +100,7 @@ dependencies {
     // add spring boot support
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+    implementation ("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web") {
         exclude("org.springframework.boot", "spring-boot-starter-tomcat")
     }
@@ -126,15 +129,13 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test") {
         exclude("junit", "junit")
     }
-
+    //JWT
     implementation("org.zalando:problem-spring-webflux:$problemSpringWebfluxVersion")
     implementation("io.jsonwebtoken:jjwt-api:$jsonwebtokenVersion")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:$jsonwebtokenVersion")
     implementation("io.jsonwebtoken:jjwt-jackson:$jsonwebtokenVersion")
-
-
-    implementation ("org.apache.commons", "commons-lang3", "3.11")
-    implementation ("org.springframework.boot:spring-boot-starter-actuator")
+    // misc
+    implementation ("org.apache.commons:commons-lang3:$commonsLang3Version")
 }
 
 tasks.withType<Test> {

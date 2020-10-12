@@ -86,13 +86,13 @@ class AuthUser(
         this.login = StringUtils.lowerCase(login, Locale.ENGLISH)
     }
 
-    override fun equals(o: Any?): Boolean {
-        if (this === o) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
             return true
         }
-        return if (o !is AuthUser) {
+        return if (other !is AuthUser) {
             false
-        } else id != null && id == o.id
+        } else id != null && id == other.id
     }
 
     override fun hashCode(): Int {

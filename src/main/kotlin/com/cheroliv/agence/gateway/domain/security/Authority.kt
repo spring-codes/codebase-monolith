@@ -20,18 +20,18 @@ class Authority(
         private const val serialVersionUID = 1L
     }
 
-    override fun equals(o: Any?): Boolean {
+    override fun equals(other: Any?): Boolean {
         return when {
-            this === o -> {
+            this === other -> {
                 true
             }
             else -> {
-                when (o) {
+                when (other) {
                     !is Authority -> {
                         false
                     }
                     else -> {
-                        name == o.name
+                        name == other.name
                     }
                 }
             }

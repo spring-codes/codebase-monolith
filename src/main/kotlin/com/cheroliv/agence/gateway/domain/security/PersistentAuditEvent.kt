@@ -33,13 +33,13 @@ class PersistentAuditEvent(
         private const val serialVersionUID = 1L
     }
 
-    override fun equals(o: Any?): Boolean {
-        if (this === o) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
             return true
         }
-        return if (o !is PersistentAuditEvent) {
+        return if (other !is PersistentAuditEvent) {
             false
-        } else id != null && id == o.id
+        } else id != null && id == other.id
     }
 
     override fun hashCode(): Int {
