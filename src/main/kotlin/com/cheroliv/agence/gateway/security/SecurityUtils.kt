@@ -1,88 +1,81 @@
-package com.cheroliv.agence.gateway.security;
+package com.cheroliv.agence.gateway.security
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.ReactiveSecurityContextHolder;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.userdetails.UserDetails;
-import reactor.core.publisher.Mono;
-
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.context.ReactiveSecurityContextHolder
+import org.springframework.security.core.context.SecurityContext
+import org.springframework.security.core.userdetails.UserDetails
+import reactor.core.publisher.Mono
 
 /**
  * Utility class for Spring Security.
  */
-public final class SecurityUtils {
-
-    private SecurityUtils() {
-    }
-
+object SecurityUtils {
     /**
      * Get the login of the current user.
      *
      * @return the login of the current user.
      */
-    public static Mono<String> getCurrentUserLogin() {
-        return ReactiveSecurityContextHolder.getContext()
-            .map(SecurityContext::getAuthentication)
-            .flatMap(authentication -> Mono.justOrEmpty(extractPrincipal(authentication)));
-    }
+    val currentUserLogin: Mono<String?>
+        get() = ReactiveSecurityContextHolder.getContext()
+                .map { obj: SecurityContext -> obj.authentication }
+                .flatMap { authentication: Authentication? -> Mono.justOrEmpty(extractPrincipal(authentication)) }
 
-    private static String extractPrincipal(Authentication authentication) {
+    private fun extractPrincipal(authentication: Authentication?): String? {
         if (authentication == null) {
-            return null;
-        } else if (authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
-            return springSecurityUser.getUsername();
-        } else if (authentication.getPrincipal() instanceof String) {
-            return (String) authentication.getPrincipal();
+            return null
+        } else if (authentication.principal is UserDetails) {
+            val springSecurityUser = authentication.principal as UserDetails
+            return springSecurityUser.username
+        } else if (authentication.principal is String) {
+            return authentication.principal as String
         }
-        return null;
+        return null
     }
-
 
     /**
      * Get the JWT of the current user.
      *
      * @return the JWT of the current user.
      */
-    public static Mono<String> getCurrentUserJWT() {
-        return ReactiveSecurityContextHolder.getContext()
-            .map(SecurityContext::getAuthentication)
-            .filter(authentication -> authentication.getCredentials() instanceof String)
-            .map(authentication -> (String) authentication.getCredentials());
-    }
+    val currentUserJWT: Mono<String?>
+        get() = ReactiveSecurityContextHolder.getContext()
+                .map { obj: SecurityContext -> obj.authentication }
+                .filter { authentication: Authentication -> authentication.credentials is String }
+                .map { authentication: Authentication -> authentication.credentials as String }
 
     /**
      * Check if a user is authenticated.
      *
      * @return true if the user is authenticated, false otherwise.
      */
-    public static Mono<Boolean> isAuthenticated() {
-        return ReactiveSecurityContextHolder.getContext()
-            .map(SecurityContext::getAuthentication)
-            .map(Authentication::getAuthorities)
-            .map(authorities -> authorities.stream()
-                .map(GrantedAuthority::getAuthority)
-                .noneMatch(AuthoritiesConstants.ANONYMOUS::equals)
-            );
-    }
+    val isAuthenticated: Mono<Boolean>
+        get() = ReactiveSecurityContextHolder.getContext()
+                .map { obj: SecurityContext -> obj.authentication }
+                .map { obj: Authentication -> obj.authorities }
+                .map { authorities: Collection<GrantedAuthority> ->
+                    authorities.stream()
+                            .map { obj: GrantedAuthority -> obj.authority }
+                            .noneMatch { anObject: String? -> AuthoritiesConstants.ANONYMOUS.equals(anObject) }
+                }
 
     /**
      * If the current user has a specific authority (security role).
-     * <p>
-     * The name of this method comes from the {@code isUserInRole()} method in the Servlet API.
+     *
+     *
+     * The name of this method comes from the `isUserInRole()` method in the Servlet API.
      *
      * @param authority the authority to check.
      * @return true if the current user has the authority, false otherwise.
      */
-    public static Mono<Boolean> isCurrentUserInRole(String authority) {
+    fun isCurrentUserInRole(authority: String): Mono<Boolean> {
         return ReactiveSecurityContextHolder.getContext()
-            .map(SecurityContext::getAuthentication)
-            .map(Authentication::getAuthorities)
-            .map(authorities -> authorities.stream()
-                .map(GrantedAuthority::getAuthority)
-                .anyMatch(authority::equals)
-            );
+                .map { obj: SecurityContext -> obj.authentication }
+                .map { obj: Authentication -> obj.authorities }
+                .map { authorities: Collection<GrantedAuthority> ->
+                    authorities.stream()
+                            .map { obj: GrantedAuthority -> obj.authority }
+                            .anyMatch { anObject: String? -> authority.equals(anObject) }
+                }
     }
-
 }

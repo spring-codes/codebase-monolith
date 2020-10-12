@@ -1,19 +1,15 @@
-package com.cheroliv.agence.gateway.security;
+package com.cheroliv.agence.gateway.security
 
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.AuthenticationException
 
 /**
  * This exception is thrown in case of a not activated user trying to authenticate.
  */
-public class UserNotActivatedException extends AuthenticationException {
+class UserNotActivatedException : AuthenticationException {
+    constructor(message: String?) : super(message) {}
+    constructor(message: String?, t: Throwable?) : super(message, t) {}
 
-    private static final long serialVersionUID = 1L;
-
-    public UserNotActivatedException(String message) {
-        super(message);
-    }
-
-    public UserNotActivatedException(String message, Throwable t) {
-        super(message, t);
+    companion object {
+        private const val serialVersionUID = 1L
     }
 }
