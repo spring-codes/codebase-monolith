@@ -3,10 +3,11 @@ import Build_gradle.Constants.cucumberVersion
 import Build_gradle.Constants.dockerHubImageRepo
 import Build_gradle.Constants.dockerHubPasswordKey
 import Build_gradle.Constants.dockerHubUsernameKey
+import Build_gradle.Constants.jsonwebtokenVersion
 import Build_gradle.Constants.junitJupiterVersion
 import Build_gradle.Constants.jvmTargetVersion
 import Build_gradle.Constants.kotlinCompilerOptions
-import Build_gradle.Constants.kotlinVersion
+import Build_gradle.Constants.problemSpringWebfluxVersion
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -24,7 +25,9 @@ object Constants {
     const val dockerHubPasswordKey = "hub_docker_com_personal_password"
     const val dockerHubImageRepo = "cheroliv/agence-gateway"
     const val appDockerBaseImage = "adoptopenjdk/openjdk15-openj9:jre-15_36_openj9-0.22.0"
-    const val kotlinVersion="1.4.10"
+    const val kotlinVersion = "1.4.10"
+    const val jsonwebtokenVersion = "0.11.2"
+    const val problemSpringWebfluxVersion = "0.26.2"
 }
 
 buildscript {
@@ -70,6 +73,8 @@ configurations {
 }
 
 dependencies {
+    //Logger
+    implementation("ch.qos.logback:logback-classic")
     // Align versions of all Kotlin components
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     // Use the Kotlin JDK 8 standard library.
@@ -97,6 +102,7 @@ dependencies {
     }
     implementation("org.springframework.boot:spring-boot-starter-undertow")
     testImplementation("io.projectreactor:reactor-test")
+    testImplementation("org.springframework.boot:spring-boot-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude("org.junit.vintage", "junit-vintage-engine")
     }
@@ -110,8 +116,19 @@ dependencies {
     runtimeOnly("io.r2dbc:r2dbc-h2")
     //runtimeOnly("io.r2dbc:r2dbc-postgresql")
     //runtimeOnly("org.postgresql:postgresql")
-    //Logger
-    implementation("ch.qos.logback:logback-classic")
+
+    //Security
+    implementation("org.springframework.security:spring-security-web")
+    implementation("org.springframework.security:spring-security-data")
+    implementation("org.springframework.security:spring-security-config")
+    testImplementation("org.springframework.security:spring-security-test") {
+        exclude("junit", "junit")
+    }
+
+    implementation("org.zalando:problem-spring-webflux:$problemSpringWebfluxVersion")
+    implementation("io.jsonwebtoken:jjwt-api:$jsonwebtokenVersion")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:$jsonwebtokenVersion")
+    implementation("io.jsonwebtoken:jjwt-jackson:$jsonwebtokenVersion")
 }
 
 tasks.withType<Test> {

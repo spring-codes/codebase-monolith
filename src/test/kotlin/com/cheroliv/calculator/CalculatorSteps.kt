@@ -3,10 +3,16 @@ package com.cheroliv.calculator
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import org.slf4j.LoggerFactory
 import kotlin.test.assertEquals
 
 
 class CalculatorSteps {
+    companion object {
+        @JvmStatic
+        private val log = LoggerFactory.getLogger(CalculatorSteps::class.java)
+    }
+
     private var calc: Calculator? = null
 
     @Given("^a calculator I just turned on$")
