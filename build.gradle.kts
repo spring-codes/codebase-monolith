@@ -6,6 +6,7 @@ import Build_gradle.Constants.dockerHubUsernameKey
 import Build_gradle.Constants.junitJupiterVersion
 import Build_gradle.Constants.jvmTargetVersion
 import Build_gradle.Constants.kotlinCompilerOptions
+import Build_gradle.Constants.kotlinVersion
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -22,9 +23,9 @@ object Constants {
     const val dockerHubUsernameKey = "hub_docker_com_personal_username"
     const val dockerHubPasswordKey = "hub_docker_com_personal_password"
     const val dockerHubImageRepo = "cheroliv/agence-gateway"
-    const val appDockerBaseImage = "adoptopenjdk/openjdk14:jdk-14.0.2_12"
+    const val appDockerBaseImage = "adoptopenjdk/openjdk15-openj9:jre-15_36_openj9-0.22.0"
+    const val kotlinVersion="1.4.10"
 }
-
 
 buildscript {
     repositories {
@@ -36,12 +37,13 @@ buildscript {
     }
 }
 
+
 plugins {
-    kotlin("jvm") version "1.4.10"
-    kotlin("plugin.spring") version "1.4.10"
-    id("io.spring.dependency-management") version "1.0.10.RELEASE"
-    id("org.springframework.boot") version "2.3.3.RELEASE"
-    id("com.google.cloud.tools.jib") version "2.5.0"
+    kotlin("jvm") version ("1.4.10")
+    kotlin("plugin.spring") version ("1.4.10")
+    id("io.spring.dependency-management") version ("1.0.10.RELEASE")
+    id("org.springframework.boot") version ("2.3.4.RELEASE")
+    id("com.google.cloud.tools.jib") version ("2.6.0")
 }
 
 
@@ -53,7 +55,7 @@ repositories {
 group = Constants.projectArtifactGroup
 version = Constants.projectVersion
 
-java.sourceCompatibility = JavaVersion.VERSION_14
+java.sourceCompatibility = JavaVersion.VERSION_15
 
 defaultTasks(Constants.defaultTaskName)
 
