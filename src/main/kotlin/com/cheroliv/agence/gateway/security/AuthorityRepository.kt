@@ -1,5 +1,6 @@
-package com.cheroliv.agence.gateway.domain.security
+package com.cheroliv.agence.gateway.security
 
+import com.cheroliv.agence.gateway.security.Authority
 import org.springframework.data.r2dbc.repository.R2dbcRepository
 
 /**

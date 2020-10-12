@@ -1,4 +1,4 @@
-package com.cheroliv.agence.gateway.domain.security
+package com.cheroliv.agence.gateway.security
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.CreatedDate

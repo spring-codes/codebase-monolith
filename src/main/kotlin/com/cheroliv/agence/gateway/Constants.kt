@@ -1,4 +1,4 @@
-package com.cheroliv.agence.gateway.domain.security
+package com.cheroliv.agence.gateway
 
 /**
  * Application constants.

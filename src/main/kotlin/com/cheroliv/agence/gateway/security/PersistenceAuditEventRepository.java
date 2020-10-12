@@ -1,4 +1,4 @@
-package com.cheroliv.agence.gateway.domain.security;
+package com.cheroliv.agence.gateway.security;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.r2dbc.core.DatabaseClient;

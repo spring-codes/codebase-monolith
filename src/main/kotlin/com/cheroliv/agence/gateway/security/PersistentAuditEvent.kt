@@ -1,4 +1,4 @@
-package com.cheroliv.agence.gateway.domain.security
+package com.cheroliv.agence.gateway.security
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Transient

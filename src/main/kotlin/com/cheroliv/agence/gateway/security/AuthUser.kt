@@ -1,5 +1,6 @@
-package com.cheroliv.agence.gateway.domain.security
+package com.cheroliv.agence.gateway.security
 
+import com.cheroliv.agence.gateway.Constants
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.apache.commons.lang3.StringUtils
 import org.springframework.data.annotation.Id

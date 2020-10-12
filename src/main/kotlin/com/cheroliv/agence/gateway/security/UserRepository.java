@@ -1,9 +1,8 @@
-package com.cheroliv.agence.gateway.domain.security;
+package com.cheroliv.agence.gateway.security;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.r2dbc.core.DatabaseClient;
 import org.springframework.data.r2dbc.core.ReactiveDataAccessStrategy;
-import org.springframework.data.r2dbc.query.Criteria;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
 import org.springframework.stereotype.Repository;

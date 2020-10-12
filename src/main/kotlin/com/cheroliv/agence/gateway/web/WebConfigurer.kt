@@ -1,4 +1,4 @@
-package com.cheroliv.agence.gateway.config
+package com.cheroliv.agence.gateway.web
 
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Configuration
