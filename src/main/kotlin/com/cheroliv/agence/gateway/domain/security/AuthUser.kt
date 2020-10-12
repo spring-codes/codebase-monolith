@@ -27,19 +27,52 @@ class AuthUser(
         @Size(min = 1, max = 50)
         private var login: String? = null,
 
-        @JsonIgnore @Column("password_hash") var password: @NotNull @Size(min = 60, max = 60) String? = null,
-        @Column("first_name") var firstName: @Size(max = 50) String? = null,
-        @Column("last_name") var lastName: @Size(max = 50) String? = null,
-        var email: @Email @Size(min = 5, max = 254) String? = null,
+        @JsonIgnore
+        @Column("password_hash")
+        @NotNull
+        @Size(min = 60, max = 60)
+        var password: String? = null,
+
+        @Column("first_name")
+        @Size(max = 50)
+        var firstName: String? = null,
+
+        @Column("last_name")
+        @Size(max = 50)
+        var lastName: String? = null,
+
+        @Email
+        @Size(min = 5, max = 254)
+        var email: String? = null,
 
         var activated: Boolean = false,
-        @Column("lang_key") var langKey: @Size(min = 2, max = 10) String? = null,
-        @Column("image_url") var imageUrl: @Size(max = 256) String? = null,
-        @Column("activation_key") @JsonIgnore var activationKey: @Size(max = 20) String? = null,
-        @Column("reset_key") @JsonIgnore var resetKey: @Size(max = 20) String? = null,
-        @Column("reset_date") var resetDate: Instant? = null,
-        @JsonIgnore @Transient var authorities: Set<Authority> = HashSet())
-    : AbstractAuditingEntity(), Serializable {
+
+        @Column("lang_key")
+        @Size(min = 2, max = 10)
+        var langKey: String? = null,
+
+        @Column("image_url")
+        @Size(max = 256)
+        var imageUrl: String? = null,
+
+        @Column("activation_key")
+        @JsonIgnore
+        @Size(max = 20)
+        var activationKey: String? = null,
+
+        @Column("reset_key")
+        @JsonIgnore
+        @Size(max = 20)
+        var resetKey: String? = null,
+
+        @Column("reset_date")
+        var resetDate: Instant? = null,
+
+        @JsonIgnore
+        @Transient
+        var authorities: Set<Authority> = HashSet()
+
+) : AbstractAuditingEntity(), Serializable {
     companion object {
         private const val serialVersionUID = 1L
     }

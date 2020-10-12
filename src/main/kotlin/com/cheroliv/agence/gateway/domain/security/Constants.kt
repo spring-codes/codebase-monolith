@@ -1,17 +1,12 @@
-package com.cheroliv.agence.gateway.domain.security;
+package com.cheroliv.agence.gateway.domain.security
 
 /**
  * Application constants.
  */
-public final class Constants {
-
+object Constants {
     // Regex for acceptable logins
-    public static final String LOGIN_REGEX = "^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$";
-
-    public static final String SYSTEM_ACCOUNT = "system";
-    public static final String DEFAULT_LANGUAGE = "en";
-    public static final String ANONYMOUS_USER = "anonymoususer";
-
-    private Constants() {
-    }
+    const val LOGIN_REGEX = "^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$"
+    const val SYSTEM_ACCOUNT = "system"
+    const val DEFAULT_LANGUAGE = "en"
+    const val ANONYMOUS_USER = "anonymoususer"
 }
