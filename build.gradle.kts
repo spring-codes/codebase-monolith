@@ -131,6 +131,10 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:$jsonwebtokenVersion")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:$jsonwebtokenVersion")
     implementation("io.jsonwebtoken:jjwt-jackson:$jsonwebtokenVersion")
+
+
+    implementation ("org.apache.commons", "commons-lang3", "3.11")
+
 }
 
 tasks.withType<Test> {
