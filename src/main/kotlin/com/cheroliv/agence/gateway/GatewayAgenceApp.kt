@@ -41,45 +41,51 @@ class GatewayAgenceApp {
     }
 
     @Bean
-    fun demo(repository: AuthorityRepository): CommandLineRunner? = CommandLineRunner { args: Array<String?>? ->
-        // save a few authorities
-        repository.run {
-            saveAll(listOf(
-                    Authority(ANONYMOUS),
-                    Authority(USER),
-                    Authority(ADMIN)))
-                    .blockLast(Duration.ofSeconds(10))
-        }
-
-        // fetch all customers
-        log.info("authorities found with findAll():")
-        log.info("-------------------------------")
-        with(repository) {
-            findAll().doOnNext { authority ->
-                log.info(authority.toString())
-            }.blockLast(Duration.ofSeconds(10))
-        }
-        log.info("")
-
-        // fetch an individual authority by ID
-        repository.findById(USER).doOnNext { authority ->
-            log.info("authority found with findById('${USER}'):")
-            log.info("--------------------------------")
-            log.info(authority.toString())
-            log.info("")
-        }.block(Duration.ofSeconds(10))
+    fun demo(repository: AuthorityRepository): CommandLineRunner? =
+            CommandLineRunner { args: Array<String?>? ->
 
 
-        // fetch customers by last name
-        log.info("authority found with findById('${ADMIN}'):")
-        log.info("--------------------------------------------")
-        repository.run {
-            findById(ADMIN).doOnNext { admin: Authority? ->
-                log.info(admin.toString())
-            }.block(Duration.ofSeconds(10))
-        }
-        log.info("")
-    }
+                // save a few authorities
+                repository.run {
+                    saveAll(listOf(
+                            Authority(ANONYMOUS),
+                            Authority(USER),
+                            Authority(ADMIN)))
+                            .blockLast(Duration.ofSeconds(10))
+                }
+
+
+                // fetch all customers
+                log.info("authorities found with findAll():")
+                log.info("-------------------------------")
+
+                with(repository) {
+                    findAll().doOnNext { authority ->
+                        log.info(authority.toString())
+                    }.blockLast(Duration.ofSeconds(10))
+                }
+                log.info("")
+
+
+                // fetch an individual authority by ID
+                repository.findById(USER).doOnNext { authority ->
+                    log.info("authority found with findById('${USER}'):")
+                    log.info("--------------------------------")
+                    log.info(authority.toString())
+                    log.info("")
+                }.block(Duration.ofSeconds(10))
+
+
+                // fetch customers by last name
+                log.info("authority found with findById('${ADMIN}'):")
+                log.info("--------------------------------------------")
+                repository.run {
+                    findById(ADMIN).doOnNext { admin: Authority? ->
+                        log.info(admin.toString())
+                    }.block(Duration.ofSeconds(10))
+                }
+                log.info("")
+            }
 }
 
 fun main(args: Array<String>) {
