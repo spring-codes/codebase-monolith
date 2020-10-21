@@ -1,7 +1,6 @@
 package com.cheroliv.agence.gateway
 
 import com.cheroliv.agence.gateway.GatewayAgenceApp.Companion.log
-import com.cheroliv.agence.gateway.security.AuthoritiesConstants
 import com.cheroliv.agence.gateway.security.AuthoritiesConstants.ADMIN
 import com.cheroliv.agence.gateway.security.AuthoritiesConstants.ANONYMOUS
 import com.cheroliv.agence.gateway.security.AuthoritiesConstants.USER
