@@ -42,8 +42,7 @@ class GatewayAgenceApp {
 
     @Bean
     fun demo(repository: AuthorityRepository): CommandLineRunner? =
-            CommandLineRunner { args: Array<String?>? ->
-
+            CommandLineRunner {
 
                 // save a few authorities
                 repository.run {
