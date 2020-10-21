@@ -1,7 +1,7 @@
-package com.cheroliv.agence.gateway.security;
+package com.cheroliv.agence.gateway.security
 
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Mono
 
-public interface DeleteExtended<T> {
-    Mono<Void> delete(T user);
+interface DeleteExtended<T> {
+    fun delete(user: T): Mono<Void?>?
 }
