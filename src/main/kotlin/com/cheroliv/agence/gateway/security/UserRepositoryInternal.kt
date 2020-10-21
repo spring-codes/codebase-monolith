@@ -1,14 +1,11 @@
-package com.cheroliv.agence.gateway.security;
+package com.cheroliv.agence.gateway.security
 
-import org.springframework.data.domain.Pageable;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import org.springframework.data.domain.Pageable
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 
-public interface UserRepositoryInternal extends DeleteExtended<AuthUser> {
-
-    Mono<AuthUser> findOneWithAuthoritiesByLogin(String login);
-
-    Mono<AuthUser> findOneWithAuthoritiesByEmailIgnoreCase(String email);
-
-    Flux<AuthUser> findAllByLoginNot(Pageable pageable, String login);
+interface UserRepositoryInternal : DeleteExtended<AuthUser?> {
+    fun findOneWithAuthoritiesByLogin(login: String?): Mono<AuthUser?>?
+    fun findOneWithAuthoritiesByEmailIgnoreCase(email: String?): Mono<AuthUser?>?
+    fun findAllByLoginNot(pageable: Pageable?, login: String?): Flux<AuthUser?>?
 }
