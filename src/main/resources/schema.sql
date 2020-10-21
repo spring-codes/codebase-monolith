@@ -13,3 +13,9 @@ CREATE MEMORY TABLE `user` (
 `activation_key` VARCHAR (20),
 `reset_key` VARCHAR (20),
 `reset_date` TIMESTAMP WITH TIME ZONE NOT NULL);
+
+CREATE MEMORY TABLE `persistent_audit_event` (
+`event_id` SERIAL PRIMARY KEY,
+`principal` VARCHAR NOT NULL ,
+`event_date` TIMESTAMP WITH TIME ZONE NOT NULL,
+`event_type` VARCHAR);

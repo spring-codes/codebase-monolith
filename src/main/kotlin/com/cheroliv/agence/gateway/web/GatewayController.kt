@@ -12,8 +12,6 @@ class GatewayController {
     companion object {
         @JvmStatic
         @GetMapping
-        fun index(): String {
-            return "Greetings from Agence Gateway!"
-        }
+        fun index(): String = "Greetings from Agence Gateway!"
     }
 }

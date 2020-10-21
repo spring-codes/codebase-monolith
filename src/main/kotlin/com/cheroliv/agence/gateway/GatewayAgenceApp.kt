@@ -6,6 +6,8 @@ import com.cheroliv.agence.gateway.security.AuthoritiesConstants.ANONYMOUS
 import com.cheroliv.agence.gateway.security.AuthoritiesConstants.USER
 import com.cheroliv.agence.gateway.security.Authority
 import com.cheroliv.agence.gateway.security.AuthorityRepository
+import com.cheroliv.agence.gateway.security.PersistenceAuditEventRepository
+import com.cheroliv.agence.gateway.security.UserRepository
 import io.r2dbc.spi.ConnectionFactory
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
@@ -37,54 +39,57 @@ class GatewayAgenceApp {
             connectionFactory: ConnectionFactory?,
     ): ConnectionFactoryInitializer? = ConnectionFactoryInitializer().apply {
         setConnectionFactory(connectionFactory!!)
-        setDatabasePopulator(ResourceDatabasePopulator(ClassPathResource("schema.sql")))
+        setDatabasePopulator(ResourceDatabasePopulator(
+                ClassPathResource("schema.sql")))
     }
 
     @Bean
-    fun demo(repository: AuthorityRepository): CommandLineRunner? =
-            CommandLineRunner {
+    fun demo(
+            authRepo: AuthorityRepository,
+//            userRepo: UserRepository,
+//            auditEventRepo: PersistenceAuditEventRepository,
+    ): CommandLineRunner? = CommandLineRunner {
 
-                // save a few authorities
-                repository.run {
-                    saveAll(listOf(
-                            Authority(ANONYMOUS),
-                            Authority(USER),
-                            Authority(ADMIN)))
-                            .blockLast(Duration.ofSeconds(10))
-                }
+        // save a few authorities
+        authRepo.run {
+            saveAll(listOf(
+                    Authority(ANONYMOUS),
+                    Authority(USER),
+                    Authority(ADMIN)))
+                    .blockLast(Duration.ofSeconds(10))
+        }
 
+        // fetch all customers
+        log.info("authorities found with findAll():")
+        log.info("-------------------------------")
 
-                // fetch all customers
-                log.info("authorities found with findAll():")
-                log.info("-------------------------------")
-
-                with(repository) {
-                    findAll().doOnNext { authority ->
-                        log.info(authority.toString())
-                    }.blockLast(Duration.ofSeconds(10))
-                }
-                log.info("")
-
-
-                // fetch an individual authority by ID
-                repository.findById(USER).doOnNext { authority ->
-                    log.info("authority found with findById('${USER}'):")
-                    log.info("--------------------------------")
-                    log.info(authority.toString())
-                    log.info("")
-                }.block(Duration.ofSeconds(10))
+        with(authRepo) {
+            findAll().doOnNext { authority ->
+                log.info(authority.toString())
+            }.blockLast(Duration.ofSeconds(10))
+        }
+        log.info("")
 
 
-                // fetch customers by last name
-                log.info("authority found with findById('${ADMIN}'):")
-                log.info("--------------------------------------------")
-                repository.run {
-                    findById(ADMIN).doOnNext { admin: Authority? ->
-                        log.info(admin.toString())
-                    }.block(Duration.ofSeconds(10))
-                }
-                log.info("")
-            }
+        // fetch an individual authority by ID
+        authRepo.findById(USER).doOnNext { authority ->
+            log.info("authority found with findById('${USER}'):")
+            log.info("--------------------------------")
+            log.info(authority.toString())
+            log.info("")
+        }.block(Duration.ofSeconds(10))
+
+
+        // fetch customers by last name
+        log.info("authority found with findById('${ADMIN}'):")
+        log.info("--------------------------------------------")
+        authRepo.run {
+            findById(ADMIN).doOnNext { admin: Authority? ->
+                log.info(admin.toString())
+            }.block(Duration.ofSeconds(10))
+        }
+        log.info("")
+    }
 }
 
 fun main(args: Array<String>) {
