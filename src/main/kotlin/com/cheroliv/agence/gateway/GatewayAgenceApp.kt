@@ -6,6 +6,8 @@ import com.cheroliv.agence.gateway.security.AuthoritiesConstants.ANONYMOUS
 import com.cheroliv.agence.gateway.security.AuthoritiesConstants.USER
 import com.cheroliv.agence.gateway.security.Authority
 import com.cheroliv.agence.gateway.security.AuthorityRepository
+import com.cheroliv.agence.gateway.security.PersistenceAuditEventRepository
+import com.cheroliv.agence.gateway.security.UserRepository
 import io.r2dbc.spi.ConnectionFactory
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
