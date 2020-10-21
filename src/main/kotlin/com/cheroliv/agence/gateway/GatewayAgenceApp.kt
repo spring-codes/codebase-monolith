@@ -6,8 +6,6 @@ import com.cheroliv.agence.gateway.security.AuthoritiesConstants.ANONYMOUS
 import com.cheroliv.agence.gateway.security.AuthoritiesConstants.USER
 import com.cheroliv.agence.gateway.security.Authority
 import com.cheroliv.agence.gateway.security.AuthorityRepository
-import com.cheroliv.agence.gateway.security.PersistenceAuditEventRepository
-import com.cheroliv.agence.gateway.security.UserRepository
 import io.r2dbc.spi.ConnectionFactory
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
@@ -21,6 +19,11 @@ import org.springframework.data.r2dbc.connectionfactory.init.ConnectionFactoryIn
 import org.springframework.data.r2dbc.connectionfactory.init.ResourceDatabasePopulator
 import java.time.Duration
 
+
+fun main(args: Array<String>) {
+    log.info("Hi...")
+    runApplication<GatewayAgenceApp>(*args)
+}
 
 @SpringBootApplication
 @EnableConfigurationProperties(ApplicationProperties::class)
@@ -48,8 +51,14 @@ class GatewayAgenceApp {
             authRepo: AuthorityRepository,
 //            userRepo: UserRepository,
 //            auditEventRepo: PersistenceAuditEventRepository,
-    ): CommandLineRunner? = CommandLineRunner {
+    ): CommandLineRunner? = CommandLineRunner { demoProcess(authRepo) }
 
+    fun demoProcess(authRepo: AuthorityRepository) {
+        demoAuth(authRepo)
+        /* TODO: userDemo(userRepo: UserRepository) and auditDemo(auditEventRepo: AuditEventRepository)""") */
+    }
+
+    fun demoAuth(authRepo: AuthorityRepository) {
         // save a few authorities
         authRepo.run {
             saveAll(listOf(
@@ -90,9 +99,4 @@ class GatewayAgenceApp {
         }
         log.info("")
     }
-}
-
-fun main(args: Array<String>) {
-    log.info("Hi...")
-    runApplication<GatewayAgenceApp>(*args)
 }
