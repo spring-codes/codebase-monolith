@@ -39,13 +39,13 @@ public class DomainUserDetailsService implements ReactiveUserDetailsService {
         log.debug("Authenticating {}", login);
 
         if (new EmailValidator().isValid(login, null)) {
-            return userRepository.findOneWithAuthoritiesByEmailIgnoreCase(login)
+            return requireNonNull(userRepository.findOneWithAuthoritiesByEmailIgnoreCase(login))
                     .switchIfEmpty(Mono.error(new UsernameNotFoundException("User with email " + login + " was not found in the database")))
                     .map(user -> createSpringSecurityUser(login, user));
         }
 
         String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
-        return userRepository.findOneWithAuthoritiesByLogin(lowercaseLogin)
+        return requireNonNull(userRepository.findOneWithAuthoritiesByLogin(lowercaseLogin))
                 .switchIfEmpty(Mono.error(new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database")))
                 .map(user -> createSpringSecurityUser(lowercaseLogin, user));
 
