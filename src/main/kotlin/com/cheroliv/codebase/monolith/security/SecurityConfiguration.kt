@@ -24,9 +24,6 @@ class SecurityConfiguration(
     @Bean
     fun passwordEncoder(): PasswordEncoder? = BCryptPasswordEncoder()
 
-    private fun securityConfigurerAdapter(): JWTConfigurer? {
-        return JWTConfigurer(tokenProvider)
-    }
-
+    private fun securityConfigurerAdapter(): JWTConfigurer? = JWTConfigurer(tokenProvider)
 
 }
