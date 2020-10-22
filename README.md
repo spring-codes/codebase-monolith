@@ -1,7 +1,7 @@
-# Gateway Agence
+# Codebase Monolith
 
 #### create a directory and move into
-```mkdir gateway-agence;cd gateway-agence```
+```mkdir codebase-monolith;cd codebase-monolith```
 
 #### initialise git repository
 ```git init; touch .gitignore```
@@ -224,7 +224,7 @@ the output should look like this :
 ```
 Gradle Test Executor 6 STANDARD_ERROR
     sept. 17, 2020 12:56:04 AM org.junit.platform.launcher.core.LauncherConfigurationParameters fromClasspathResource
-    INFO: Loading JUnit Platform configuration parameters from classpath resource [file:/home/cheroliv/src/developer-project/gateway-agence/build/resources/test/junit-platform.properties].
+    INFO: Loading JUnit Platform configuration parameters from classpath resource [file:/home/cheroliv/src/developer-project/codebase-monolith/build/resources/test/junit-platform.properties].
 
 com.cheroliv.calculator.CucumberTest > Addition STANDARD_OUT
 
