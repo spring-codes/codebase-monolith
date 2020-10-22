@@ -131,9 +131,9 @@ tasks.withType<KotlinCompile> {
 
 jib {
     from {
-        this.image = properties["app_docker_base_image"] as String?
+        image = properties["app_docker_base_image"] as String?
     }
     to {
-        this.image = properties["docker_hub_image_repo"] as String?
+        image = properties["docker_hub_image_repo"] as String?
     }
 }
