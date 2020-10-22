@@ -1,20 +1,14 @@
-package com.cheroliv.agence.gateway.security;
+package com.cheroliv.agence.gateway.security
 
-import org.springframework.data.domain.Pageable;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import org.springframework.data.domain.Pageable
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
+import java.time.Instant
 
-import java.time.Instant;
-
-public interface PersistenceAuditEventRepositoryInternal {
-
-    Flux<PersistentAuditEvent> findByPrincipal(String principal);
-
-    Flux<PersistentAuditEvent> findAllByAuditEventDateBetween(Instant fromDate, Instant toDate, Pageable pageable);
-
-    Flux<PersistentAuditEvent> findByAuditEventDateBefore(Instant before);
-
-    Flux<PersistentAuditEvent> findAllBy(Pageable pageable);
-
-    Mono<Long> countByAuditEventDateBetween(Instant fromDate, Instant toDate);
+interface PersistenceAuditEventRepositoryInternal {
+    fun findByPrincipal(principal: String?): Flux<PersistentAuditEvent?>?
+    fun findAllByAuditEventDateBetween(fromDate: Instant?, toDate: Instant?, pageable: Pageable?): Flux<PersistentAuditEvent?>?
+    fun findByAuditEventDateBefore(before: Instant?): Flux<PersistentAuditEvent?>?
+    fun findAllBy(pageable: Pageable?): Flux<PersistentAuditEvent?>?
+    fun countByAuditEventDateBetween(fromDate: Instant?, toDate: Instant?): Mono<Long?>?
 }
