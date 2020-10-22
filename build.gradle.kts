@@ -86,9 +86,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("io.r2dbc:r2dbc-h2")
-//    runtimeOnly("io.r2dbc:r2dbc-spi")
-    //runtimeOnly("io.r2dbc:r2dbc-postgresql")
-    //runtimeOnly("org.postgresql:postgresql")
 
     //Security
     implementation("org.springframework.security:spring-security-web")
@@ -124,14 +121,9 @@ tasks.withType<KotlinCompile> {
 
 jib {
     from {
-        image = properties["app_docker_base_image"] as String?
+        this.image = properties["app_docker_base_image"] as String?
     }
     to {
-        image = properties["docker_hub_image_repo"] as String?
-
-        auth {
-            username = properties["docker_hub_username_key"] as String?
-            password = properties["docker_hub_password_key"] as String?
-        }
+        this.image = properties["docker_hub_image_repo"] as String?
     }
 }
