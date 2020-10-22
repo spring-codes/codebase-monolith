@@ -17,4 +17,6 @@ class WebConfigurer : WebFluxConfigurer {
     fun foo() {
         log.info("webConfigurer")
     }
+
+
 }

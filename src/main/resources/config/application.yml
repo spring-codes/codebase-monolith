@@ -13,9 +13,9 @@ spring:
       additional-exclude: .h2.server.properties, schema.sql
     livereload:
       enabled: false
-##  jackson:
-##    serialization:
-##      indent-output: true
+  jackson:
+    serialization:
+      indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:h2:file:./build/h2db/db/codebase;DB_CLOSE_DELAY=-1

@@ -11,8 +11,9 @@ import org.springframework.web.reactive.config.WebFluxConfigurer
 @Configuration
 class DateTimeFormatConfiguration : WebFluxConfigurer {
     override fun addFormatters(registry: FormatterRegistry) {
-        val registrar = DateTimeFormatterRegistrar()
-        registrar.setUseIsoFormat(true)
-        registrar.registerFormatters(registry)
+         DateTimeFormatterRegistrar().apply {
+             this.setUseIsoFormat(true)
+             this.registerFormatters(registry)
+         }
     }
 }
