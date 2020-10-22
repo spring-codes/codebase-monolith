@@ -1,6 +1,6 @@
 package com.cheroliv.codebase.monolith
 
-import com.cheroliv.codebase.monolith.MonolithApp.Companion.log
+import com.cheroliv.codebase.monolith.App.Companion.log
 import com.cheroliv.codebase.monolith.security.AuthoritiesConstants.ADMIN
 import com.cheroliv.codebase.monolith.security.AuthoritiesConstants.ANONYMOUS
 import com.cheroliv.codebase.monolith.security.AuthoritiesConstants.USER
@@ -24,17 +24,17 @@ import java.time.Duration.ofSeconds
 
 fun main(args: Array<String>) {
     log.info("Hi...")
-    runApplication<MonolithApp>(*args)
+    runApplication<App>(*args)
 }
 
 @SpringBootApplication
 @EnableConfigurationProperties(ApplicationProperties::class)
-class MonolithApp {
+class App {
     val greeting: String = "Hello world."
 
     companion object {
         @JvmStatic
-        val log: Logger by lazy { getLogger(MonolithApp::class.java) }
+        val log: Logger by lazy { getLogger(App::class.java) }
     }
 
 

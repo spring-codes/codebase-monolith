@@ -4,15 +4,15 @@ import org.junit.jupiter.api.Test
 import org.slf4j.LoggerFactory
 import kotlin.test.assertNotNull
 
-class MonolithAppTest {
+class AppTest {
     companion object {
         @JvmStatic
-        private val log by lazy { LoggerFactory.getLogger(MonolithAppTest::class.java) }
+        private val log by lazy { LoggerFactory.getLogger(AppTest::class.java) }
     }
 
     @Test
     fun testAppHasAGreeting() {
-        assertNotNull(MonolithApp().greeting,
+        assertNotNull(App().greeting,
                 "app should have a greeting")
     }
 }
