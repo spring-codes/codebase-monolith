@@ -1,98 +1,88 @@
-package com.cheroliv.agence.gateway.security;
+package com.cheroliv.agence.gateway.security
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.r2dbc.core.DatabaseClient;
-import org.springframework.data.relational.core.query.Criteria;
-import org.springframework.data.util.Pair;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import com.cheroliv.agence.gateway.security.PersistentAuditEvent
+import io.r2dbc.spi.Row
+import org.springframework.data.domain.Pageable
+import org.springframework.data.r2dbc.core.DatabaseClient
+import org.springframework.data.r2dbc.core.DatabaseClient.TypedSelectSpec
+import org.springframework.data.relational.core.query.Criteria
+import org.springframework.data.util.Pair
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.Map;
-
-public class PersistenceAuditEventRepositoryInternalImpl implements PersistenceAuditEventRepositoryInternal {
-
-    private final DatabaseClient databaseClient;
-
-    public PersistenceAuditEventRepositoryInternalImpl(DatabaseClient databaseClient) {
-        this.databaseClient = databaseClient;
+class PersistenceAuditEventRepositoryInternalImpl(private val databaseClient: DatabaseClient) : PersistenceAuditEventRepositoryInternal {
+    override fun findByPrincipal(principal: String?): Flux<PersistentAuditEvent?>? {
+        return findAllByCriteria(Criteria.where("principal").`is`(principal!!))
     }
 
-    @Override
-    public Flux<PersistentAuditEvent> findByPrincipal(String principal) {
-        return findAllByCriteria(Criteria.where("principal").is(principal));
-    }
-
-    @Override
-    public Flux<PersistentAuditEvent> findAllByAuditEventDateBetween(Instant fromDate, Instant toDate, Pageable pageable) {
+    override fun findAllByAuditEventDateBetween(fromDate: Instant?, toDate: Instant?, pageable: Pageable?): Flux<PersistentAuditEvent?>? {
         // LocalDateTime seems to be the only type that is supported across all drivers atm
         // See https://github.com/r2dbc/r2dbc-h2/pull/139 https://github.com/mirromutth/r2dbc-mysql/issues/105
-        LocalDateTime fromDateLocal = LocalDateTime.ofInstant(fromDate, ZoneOffset.UTC);
-        LocalDateTime toDateLocal = LocalDateTime.ofInstant(toDate, ZoneOffset.UTC);
-        Criteria criteria = Criteria
+        val fromDateLocal = LocalDateTime.ofInstant(fromDate, ZoneOffset.UTC)
+        val toDateLocal = LocalDateTime.ofInstant(toDate, ZoneOffset.UTC)
+        val criteria = Criteria
                 .where("event_date").greaterThan(fromDateLocal)
-                .and("event_date").lessThan(toDateLocal);
-        return findAllFromSpec(select().matching(criteria).page(pageable));
+                .and("event_date").lessThan(toDateLocal)
+        return findAllFromSpec(select().matching(criteria).page(pageable!!))
     }
 
-    @Override
-    public Flux<PersistentAuditEvent> findByAuditEventDateBefore(Instant before) {
+    override fun findByAuditEventDateBefore(before: Instant?): Flux<PersistentAuditEvent?>? {
         // LocalDateTime seems to be the only type that is supported across all drivers atm
         // See https://github.com/r2dbc/r2dbc-h2/pull/139 https://github.com/mirromutth/r2dbc-mysql/issues/105
-        LocalDateTime beforeLocal = LocalDateTime.ofInstant(before, ZoneOffset.UTC);
-        return findAllByCriteria(Criteria.where("event_date").lessThan(beforeLocal));
+        val beforeLocal = LocalDateTime.ofInstant(before, ZoneOffset.UTC)
+        return findAllByCriteria(Criteria.where("event_date").lessThan(beforeLocal))
     }
 
-    @Override
-    public Flux<PersistentAuditEvent> findAllBy(Pageable pageable) {
-        return findAllFromSpec(select().page(pageable));
+    override fun findAllBy(pageable: Pageable?): Flux<PersistentAuditEvent?>? {
+        return findAllFromSpec(select().page(pageable!!))
     }
 
-    @Override
-    public Mono<Long> countByAuditEventDateBetween(Instant fromDate, Instant toDate) {
+    override fun countByAuditEventDateBetween(fromDate: Instant?, toDate: Instant?): Mono<Long?>? {
         // LocalDateTime seems to be the only type that is supported across all drivers atm
         // See https://github.com/r2dbc/r2dbc-h2/pull/139 https://github.com/mirromutth/r2dbc-mysql/issues/105
-        LocalDateTime fromDateLocal = LocalDateTime.ofInstant(fromDate, ZoneOffset.UTC);
-        LocalDateTime toDateLocal = LocalDateTime.ofInstant(toDate, ZoneOffset.UTC);
+        val fromDateLocal = LocalDateTime.ofInstant(fromDate, ZoneOffset.UTC)
+        val toDateLocal = LocalDateTime.ofInstant(toDate, ZoneOffset.UTC)
         return databaseClient.execute("SELECT COUNT(DISTINCT event_id) FROM persistent_audit_event " +
                 "WHERE event_date > :fromDate AND event_date < :toDate")
                 .bind("fromDate", fromDateLocal)
                 .bind("toDate", toDateLocal)
-                .as(Long.class)
+                .`as`(Long::class.java)
                 .fetch()
-                .one();
+                .one()
     }
 
-    private Flux<PersistentAuditEvent> findAllByCriteria(Criteria criteria) {
-        return findAllFromSpec(select().matching(criteria));
+    private fun findAllByCriteria(criteria: Criteria): Flux<PersistentAuditEvent?> {
+        return findAllFromSpec(select().matching(criteria))
     }
 
-    private DatabaseClient.TypedSelectSpec<PersistentAuditEvent> select() {
-        return databaseClient.select().from(PersistentAuditEvent.class);
+    private fun select(): TypedSelectSpec<PersistentAuditEvent> {
+        return databaseClient.select().from(PersistentAuditEvent::class.java)
     }
 
-    private Flux<PersistentAuditEvent> findAllFromSpec(DatabaseClient.TypedSelectSpec<PersistentAuditEvent> spec) {
-        return spec.as(PersistentAuditEvent.class).all()
-                .flatMap(event -> findAllEventData(event.getId())
-                        .map(data -> {
-                            event.setData(data);
-                            return event;
-                        })
-                );
+    private fun findAllFromSpec(spec: TypedSelectSpec<PersistentAuditEvent>): Flux<PersistentAuditEvent?> {
+        return spec.`as`(PersistentAuditEvent::class.java).all()
+                .flatMap { event: PersistentAuditEvent ->
+                    findAllEventData(event.id)
+                            .map { data: Map<String?, String?>? ->
+                                event.data = requireNotNull(data as Map<String, String>)
+                                event
+                            }
+                }
     }
 
-    private Mono<Map<String, String>> findAllEventData(Long id) {
+    private fun findAllEventData(id: Long?): Mono<Map<String?, String?>> {
         return databaseClient.select().from("persistent_audit_evt_data")
                 .project("name", "value")
-                .matching(Criteria.where("event_id").is(id))
-                .map(row -> {
-                    String name = row.get("name", String.class);
-                    String value = row.get("value", String.class);
-                    return Pair.of(name == null ? "" : name, value == null ? "" : value);
-                })
+                .matching(Criteria.where("event_id").`is`(id!!))
+                .map { row: Row ->
+                    val name = row.get("name", String::class.java)
+                    val value = row.get("value", String::class.java)
+                    Pair.of(name ?: "", value ?: "")
+                }
                 .all()
-                .collectMap(Pair::getFirst, Pair::getSecond);
+                .collectMap({ obj: Pair<String, String> -> obj.first }) { obj: Pair<String, String> -> obj.second }
     }
 }
