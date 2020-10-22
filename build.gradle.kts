@@ -128,6 +128,7 @@ jib {
     }
     to {
         image = properties["docker_hub_image_repo"] as String?
+
         auth {
             username = properties["docker_hub_username_key"] as String?
             password = properties["docker_hub_password_key"] as String?
