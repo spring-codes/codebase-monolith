@@ -54,10 +54,7 @@ class App {
 //            userRepo: UserRepository,
             auditEventRepo: PersistenceAuditEventRepository,
     ): CommandLineRunner? = CommandLineRunner {
-        demoProcess(
-                authRepo,
-//            userRepo,
-                auditEventRepo)
+        demoProcess(authRepo,/*userRepo,*/auditEventRepo)
     }
 
     fun demoProcess(
@@ -68,15 +65,6 @@ class App {
         demoAuth(authRepo)
 //        userDemo(userRepo)
         auditDemo(auditEventRepo)
-    }
-
-//    fun userDemo(userRepo: UserRepository) {
-//        log.info("wassup wassup!")
-//    }
-
-    fun auditDemo(auditEventRepo: PersistenceAuditEventRepository) {
-        log.info("wassup wassup!")
-        log.info("auditEventRepo.count() = ${auditEventRepo.count()}")
     }
 
     fun demoAuth(authRepo: AuthorityRepository) {
@@ -120,4 +108,23 @@ class App {
         }
         log.info("")
     }
+
+
+    fun auditDemo(auditEventRepo: PersistenceAuditEventRepository) {
+        log.info("wassup wassup!")
+//        with(auditEventRepo) {
+//            saveAll(listOf(
+//                    PersistentAuditEvent().apply {
+//                        id = 1L
+//                        principal = "user"
+//                        auditEventDate = now().minusSeconds(3600)
+//                        auditEventType = "foo_type"
+//                    })).blockLast(ofSeconds(10))
+//        }
+    }
+
+//    fun userDemo(userRepo: UserRepository) {
+//        log.info("wassup wassup!")
+//    }
+
 }
