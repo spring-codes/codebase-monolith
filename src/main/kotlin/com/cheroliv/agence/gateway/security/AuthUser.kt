@@ -1,8 +1,8 @@
 package com.cheroliv.agence.gateway.security
 
-import com.cheroliv.agence.gateway.Constants
+import com.cheroliv.agence.gateway.Constants.LOGIN_REGEX
 import com.fasterxml.jackson.annotation.JsonIgnore
-import org.apache.commons.lang3.StringUtils
+import org.apache.commons.lang3.StringUtils.lowerCase
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.Transient
 import org.springframework.data.relational.core.mapping.Column
@@ -24,7 +24,7 @@ class AuthUser(
         var id: Long? = null,
 
         @NotNull
-        @Pattern(regexp = Constants.LOGIN_REGEX)
+        @Pattern(regexp = LOGIN_REGEX)
         @Size(min = 1, max = 50)
         private var login: String? = null,
 
@@ -84,16 +84,12 @@ class AuthUser(
 
     // Lowercase the login before saving it in database
     fun setLogin(login: String?) {
-        this.login = StringUtils.lowerCase(login, Locale.ENGLISH)
+        this.login = lowerCase(login, Locale.ENGLISH)
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-        return if (other !is AuthUser) {
-            false
-        } else id != null && id == other.id
+        if (this === other) return true
+        return if (other !is AuthUser) false else id != null && id == other.id
     }
 
     override fun hashCode(): Int {
@@ -113,6 +109,4 @@ class AuthUser(
                 ", activationKey='" + activationKey + '\'' +
                 "}"
     }
-
-
 }
