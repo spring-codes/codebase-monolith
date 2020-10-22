@@ -1,1 +1,1 @@
-rootProject.name = "agence-gateway"
+rootProject.name = "codebase-monolith"
