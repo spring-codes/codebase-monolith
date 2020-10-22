@@ -52,7 +52,7 @@ class GatewayAgenceApp {
     fun demo(
             authRepo: AuthorityRepository,
 //            userRepo: UserRepository,
-//            auditEventRepo: PersistenceAuditEventRepository,
+            auditEventRepo: PersistenceAuditEventRepository,
     ): CommandLineRunner? = CommandLineRunner { demoProcess(authRepo) }
 
     fun demoProcess(authRepo: AuthorityRepository) {
