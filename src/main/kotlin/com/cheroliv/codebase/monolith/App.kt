@@ -53,11 +53,30 @@ class App {
             authRepo: AuthorityRepository,
 //            userRepo: UserRepository,
             auditEventRepo: PersistenceAuditEventRepository,
-    ): CommandLineRunner? = CommandLineRunner { demoProcess(authRepo) }
+    ): CommandLineRunner? = CommandLineRunner {
+        demoProcess(
+                authRepo,
+//            userRepo,
+                auditEventRepo)
+    }
 
-    fun demoProcess(authRepo: AuthorityRepository) {
+    fun demoProcess(
+            authRepo: AuthorityRepository,
+//            userRepo: UserRepository,
+            auditEventRepo: PersistenceAuditEventRepository,
+    ) {
         demoAuth(authRepo)
-        /* TODO: userDemo(userRepo: UserRepository) and auditDemo(auditEventRepo: AuditEventRepository)""") */
+//        userDemo(userRepo)
+        auditDemo(auditEventRepo)
+    }
+
+//    fun userDemo(userRepo: UserRepository) {
+//        log.info("wassup wassup!")
+//    }
+
+    fun auditDemo(auditEventRepo: PersistenceAuditEventRepository) {
+        log.info("wassup wassup!")
+        log.info("auditEventRepo.count() = ${auditEventRepo.count()}")
     }
 
     fun demoAuth(authRepo: AuthorityRepository) {

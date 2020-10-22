@@ -30,5 +30,6 @@ spring:
   jpa:
     database-platform: com.cheroliv.codebase.monolith.security.CustomH2Dialect
     show-sql: true
+    generate-ddl: true
   main:
     allow-bean-definition-overriding: true
