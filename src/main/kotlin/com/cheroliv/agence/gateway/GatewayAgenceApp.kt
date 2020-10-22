@@ -9,7 +9,7 @@ import com.cheroliv.agence.gateway.security.AuthorityRepository
 import com.cheroliv.agence.gateway.security.PersistenceAuditEventRepository
 import io.r2dbc.spi.ConnectionFactory
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import org.slf4j.LoggerFactory.getLogger
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -34,7 +34,7 @@ class GatewayAgenceApp {
 
     companion object {
         @JvmStatic
-        val log: Logger by lazy { LoggerFactory.getLogger(GatewayAgenceApp::class.java) }
+        val log: Logger by lazy { getLogger(GatewayAgenceApp::class.java) }
     }
 
 
