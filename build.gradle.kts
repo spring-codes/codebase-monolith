@@ -49,6 +49,7 @@ dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     // Use the Kotlin JDK 8 standard library.
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
     // Use the Kotlin test library.
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     // Use the Kotlin JUnit integration.
@@ -59,6 +60,7 @@ dependencies {
     testImplementation("io.cucumber:cucumber-java:${properties["cucumber_version"]}")
     testImplementation("io.cucumber:cucumber-junit-platform-engine:${properties["cucumber_version"]}")
     testImplementation("io.cucumber:cucumber-junit:${properties["cucumber_version"]}")
+    // Junit
     testImplementation("org.junit.jupiter:junit-jupiter:${properties["junit_jupiter_version"]}")
     testImplementation("org.junit.vintage:junit-vintage-engine:${properties["junit_jupiter_version"]}")
     // add coroutines support
@@ -67,23 +69,31 @@ dependencies {
     // add spring boot support
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+    // Spring Metrics
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    // Spring web
     implementation("org.springframework.boot:spring-boot-starter-web") {
         exclude("org.springframework.boot", "spring-boot-starter-tomcat")
     }
     implementation("org.springframework.boot:spring-boot-starter-undertow")
+    // Reactor
+    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     testImplementation("io.projectreactor:reactor-test")
+
+    // Spring boot test
     testImplementation("org.springframework.boot:spring-boot-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude("org.junit.vintage", "junit-vintage-engine")
     }
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    // Jackson
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+    // Bean Validation
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    // JPA
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    // R2DBC
+    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("io.r2dbc:r2dbc-h2")
 
