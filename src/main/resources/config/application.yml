@@ -1,4 +1,34 @@
-#spring.jpa.hibernate.ddl-auto=update
-##spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:3306/db_example
-#spring.datasource.username=user
-#spring.datasource.password=user
+#logging:
+#  level:
+#    ROOT: DEBUG
+#    codebase: DEBUG
+#server:
+#  port: 8080
+#spring:
+#  profiles:
+#    active: dev
+#  devtools:
+#    restart:
+#      enabled: true
+#      additional-exclude: static/**,.h2.server.properties
+#    livereload:
+#      enabled: false
+##  jackson:
+##    serialization:
+##      indent-output: true
+##  datasource:
+##    type: com.zaxxer.hikari.HikariDataSource
+##    url: jdbc:h2:file:./build/h2db/db/codebase;DB_CLOSE_DELAY=-1
+##    username: codebase
+##    password: codebase
+##    hikari:
+##      poolName: Hikari
+##      auto-commit: false
+#  h2:
+#    console:
+#      enabled: true
+#  jpa:
+#    database-platform: com.cheroliv.codebase.monolith.security.CustomH2Dialect
+#    show-sql: true
+#  main:
+#    allow-bean-definition-overriding=true
