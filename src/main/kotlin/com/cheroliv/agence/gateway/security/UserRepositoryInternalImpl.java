@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
-import static org.springframework.data.r2dbc.query.Criteria.where;
+import static org.springframework.data.relational.core.query.Criteria.where;
 
 public class UserRepositoryInternalImpl implements UserRepositoryInternal {
     private final DatabaseClient db;
