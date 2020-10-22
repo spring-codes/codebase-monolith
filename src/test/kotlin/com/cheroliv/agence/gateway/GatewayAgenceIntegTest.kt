@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest
 class GatewayAgenceIntegTest {
     companion object {
         @JvmStatic
-        private val log = LoggerFactory.getLogger(GatewayAgenceIntegTest::class.java)
+        private val log by lazy { LoggerFactory.getLogger(GatewayAgenceIntegTest::class.java) }
     }
 
     @Test

@@ -7,8 +7,8 @@ import com.cheroliv.agence.gateway.security.AuthoritiesConstants.USER
 import com.cheroliv.agence.gateway.security.Authority
 import com.cheroliv.agence.gateway.security.AuthorityRepository
 import com.cheroliv.agence.gateway.security.PersistenceAuditEventRepository
-import com.cheroliv.agence.gateway.security.UserRepository
 import io.r2dbc.spi.ConnectionFactory
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.CommandLineRunner
@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.core.io.ClassPathResource
 import org.springframework.data.r2dbc.connectionfactory.init.ConnectionFactoryInitializer
 import org.springframework.data.r2dbc.connectionfactory.init.ResourceDatabasePopulator
-import java.time.Duration
+import java.time.Duration.ofSeconds
 
 
 fun main(args: Array<String>) {
@@ -34,7 +34,7 @@ class GatewayAgenceApp {
 
     companion object {
         @JvmStatic
-        val log = LoggerFactory.getLogger(GatewayAgenceApp::class.java)
+        val log: Logger by lazy { LoggerFactory.getLogger(GatewayAgenceApp::class.java) }
     }
 
 
@@ -67,7 +67,7 @@ class GatewayAgenceApp {
                     Authority(ANONYMOUS),
                     Authority(USER),
                     Authority(ADMIN)))
-                    .blockLast(Duration.ofSeconds(10))
+                    .blockLast(ofSeconds(10))
         }
 
         // fetch all customers
@@ -77,7 +77,7 @@ class GatewayAgenceApp {
         with(authRepo) {
             findAll().doOnNext { authority ->
                 log.info(authority.toString())
-            }.blockLast(Duration.ofSeconds(10))
+            }.blockLast(ofSeconds(10))
         }
         log.info("")
 
@@ -88,7 +88,7 @@ class GatewayAgenceApp {
             log.info("--------------------------------")
             log.info(authority.toString())
             log.info("")
-        }.block(Duration.ofSeconds(10))
+        }.block(ofSeconds(10))
 
 
         // fetch customers by last name
@@ -97,7 +97,7 @@ class GatewayAgenceApp {
         authRepo.run {
             findById(ADMIN).doOnNext { admin: Authority? ->
                 log.info(admin.toString())
-            }.block(Duration.ofSeconds(10))
+            }.block(ofSeconds(10))
         }
         log.info("")
     }

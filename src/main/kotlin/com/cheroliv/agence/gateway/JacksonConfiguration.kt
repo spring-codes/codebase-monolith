@@ -14,28 +14,20 @@ class JacksonConfiguration {
      * @return the corresponding Jackson module.
      */
     @Bean
-    fun javaTimeModule(): JavaTimeModule {
-        return JavaTimeModule()
-    }
+    fun javaTimeModule(): JavaTimeModule = JavaTimeModule()
 
     @Bean
-    fun jdk8TimeModule(): Jdk8Module {
-        return Jdk8Module()
-    }
+    fun jdk8TimeModule(): Jdk8Module = Jdk8Module()
 
     /*
      * Module for serialization/deserialization of RFC7807 Problem.
      */
     @Bean
-    fun problemModule(): ProblemModule {
-        return ProblemModule()
-    }
+    fun problemModule(): ProblemModule = ProblemModule()
 
     /*
      * Module for serialization/deserialization of ConstraintViolationProblem.
      */
     @Bean
-    fun constraintViolationProblemModule(): ConstraintViolationProblemModule {
-        return ConstraintViolationProblemModule()
-    }
+    fun constraintViolationProblemModule(): ConstraintViolationProblemModule = ConstraintViolationProblemModule()
 }

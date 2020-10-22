@@ -8,7 +8,7 @@ import kotlin.test.assertNotNull
 class GatewayAgenceAppTest {
     companion object {
         @JvmStatic
-        private val log = LoggerFactory.getLogger(GatewayAgenceAppTest::class.java)
+        private val log by lazy { LoggerFactory.getLogger(GatewayAgenceAppTest::class.java) }
     }
 
     @Test
